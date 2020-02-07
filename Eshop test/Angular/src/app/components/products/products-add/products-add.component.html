@@ -1,0 +1,35 @@
+<div *ngIf="loadingState.isError()" class="alert alert-danger">{{loadingState.getError()}}</div>
+<div *ngIf="loadingState.isSuccess()" class="alert alert-success">Produkt úspěšně přidán</div>
+<h1 class="text-center text-primary">Přidat produkt</h1>
+<div class="row">
+  <div class="col-md">
+    <h2>Náhled</h2>
+    <div class="card">
+      <div class="card-header" *ngIf="product.name!=null">{{product.name}}</div>
+      <div class="card-body">
+        <img src="{{productsService.getPictureUrl(product)}}" alt="{{product.name}}" height="100" width="100">
+        <p class="card-text">&nbsp;</p>
+        <h5 class="card-text" *ngIf="product.price!=null">{{product.price.toFixed(2)}} CZK</h5>
+        <button class="btn btn-success btn-md">Objednat</button>
+      </div>
+    </div>
+  </div>
+  <div class="col-md" *ngIf="!finished">
+    <form>
+      <div class="form-group">
+        <label for="name" class="form-label">Název</label>
+        <input id="name" name="name" type="text" class="form-control" [(ngModel)]="product.name" required/>
+      </div>
+      <div class="form-group">
+        <label for="price" class="form-label">Cena</label>
+        <input id="price" name="price" type="number" class="form-control" [(ngModel)]="product.price" min="1" required/>
+      </div>
+      <div class="form-group">
+        <label for="pictureUrl" class="form-label">URL Obrázku</label>
+        <input id="pictureUrl" name="pictureUrl" type="text" class="form-control" [(ngModel)]="product.pictureUrl"
+               required/>
+      </div>
+      <button type="button" class="btn btn-primary form-control" (click)="insertNew()">Přidat</button>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,99 @@
+<div *ngIf="shoppingCartService.isCartExists()||componentState.isFinished()">
+  <div *ngIf="!componentState.isAddress()">
+    <h1 *ngIf="!componentState.isFinished()" class="text-center text-primary">Můj košík</h1>
+    <div *ngIf="componentState.isFinished()">
+      <div class="alert alert-success"><b>Objednávka úspěšně dokončena!</b></div>
+      <h2 class="text-center text-primary">Objednávka číslo {{orderNumber}}</h2>
+    </div>
+    <div *ngIf="loadingState.isWorking()">
+      <span class="spinner-border spinner-border-sm"></span> Loading...
+    </div>
+    <div *ngIf="loadingState.isError()">
+      <div class="alert alert-danger">Spojení se serverem selhalo</div>
+    </div>
+    <div *ngIf="loadingState.isSuccess()">
+      <table class="table table-light table-hover">
+        <thead class="thead-dark">
+        <tr>
+          <th></th>
+          <th>Název</th>
+          <th>Cena</th>
+          <th>Množství</th>
+          <th>Cena celkem</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let item of cart" data-toggle="modal" data-target="#changeAmount"
+            (click)="alterAmount(item.productID)">
+          {{loadProduct(item.productID)}}
+          <td><img src="{{productsService.getPictureUrl(listedProduct)}}" width="50" height="50"
+                   alt="{{listedProduct.name}}"></td>
+          <td>{{listedProduct.name}}</td>
+          <td>{{listedProduct.discountPrice}}</td>
+          <td>{{item.amount}}</td>
+          <td>{{item.amount * listedProduct.discountPrice}}</td>
+        </tr>
+        </tbody>
+      </table>
+      <h4 class="text-info">Celková cena: {{totalPrice.toFixed(2)}} CZK</h4>
+      <div class="row mb-2">
+        <button class="btn btn-success btn-md" (click)="componentState.setAddress()"
+                *ngIf="componentState.isViewCart()&&cart.length>0">Objednat
+        </button>
+      </div>
+      <div class="row mb-2">
+        <button class="btn btn-danger btn-md" (click)="empetyCart()"
+                *ngIf="componentState.isViewCart()&&cart.length>0">Vyprázdnit košík
+        </button>
+      </div>
+
+      <div *ngIf="componentState.isGoToFinish()">
+        <h4 class="text-secondary">Adresa: {{orderAddr.street}} {{orderAddr.city}}, {{orderAddr.psc}}</h4>
+        <button class="btn btn-success btn-md" (click)="finishOrder()">Dokončit objednávku</button>
+      </div>
+
+    </div>
+  </div>
+  <div *ngIf="componentState.isAddress()">
+    <h2>Adresa</h2>
+    <div class="form-group">
+      <label for="city" class="form-label">Město: </label>
+      <input id="city" type="text" class="form-control" [(ngModel)]="orderAddr.city">
+    </div>
+    <div class="form-group">
+      <label for="street" class="form-label">Ulice a č.p.: </label>
+      <input id="street" type="text" class="form-control" [(ngModel)]="orderAddr.street">
+    </div>
+    <div class="form-group">
+      <label for="psc" class="form-label">PSČ: </label>
+      <input id="psc" type="text" class="form-control" [(ngModel)]="orderAddr.psc">
+    </div>
+    <button class="btn btn-success btn-md" (click)="componentState.setGoToFinish()">Pokračovat</button>
+  </div>
+</div>
+<div *ngIf="!shoppingCartService.isCartExists()&&!componentState.isFinished()">
+  <div class="alert alert-primary">Košík je prázdný</div>
+  {{showProducts()}}
+</div>
+
+<div id="changeAmount" class="modal fade" *ngIf="focusedProduct!=null">
+  <div class="modal-dialog modal-md">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title text-secondary">Produkt {{focusedProduct.name}}</h2>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <h6 class="form-label">Současná cena za kus: {{focusedProduct.discountPrice}}</h6>
+        <h5 class="form-label">Počet: </h5>
+        <input class="form-control" type="number" min="0" (keyup)="amountChanged()"
+               [(ngModel)]="alteredAmount">
+        <h4>Cena: {{focusedProduct.discountPrice * alteredAmount}} CZK</h4>
+        <button type="button" class="btn btn-md btn-success" data-dismiss="modal" (click)="finishUpdateAmount()">Uložit
+          změny
+        </button>
+        <button type="button" class="btn btn-md btn-danger float-right" data-dismiss="modal">Zrušit</button>
+      </div>
+    </div>
+  </div>
+</div>

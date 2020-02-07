@@ -1,0 +1,100 @@
+<header>
+    <a routerLink="" class="mr-auto"> <img
+      src="https://ae01.alicdn.com/kf/HTB1_gUhRVXXXXbXXpXXq6xXFXXX8/Top-Tees-Custom-Any-Logo-Size-M4-SHERMAN-TANK-M-4-decals-kit-US-model-M4A1.jpg"
+      height="100" width="100">
+    </a>
+</header>
+
+<nav id="nav" class="navbar navbar-expand-md bg-dark navbar-dark sticky-top">
+  <ul class="navbar-nav mr-auto">
+    <li class="nav-item" *ngIf="loginService.isAdminMode()">
+      <a class="nav-link cursor" routerLink="customers">Zákazníci</a>
+    </li>
+    <li class="nav-item dropdown" *ngIf="loginService.isAdminMode()">
+      <a href="#" class="nav-link dropdown-toggle" id="navbardrop" data-toggle="dropdown">Produkty</a>
+      <div class="dropdown-menu">
+        <a class="dropdown-item cursor" routerLink="products">Výpis</a>
+        <a class="dropdown-item cursor" routerLink="products/add">Přidat</a>
+      </div>
+    </li>
+    <li class="nav-item" *ngIf="!loginService.isAdminMode()">
+      <a class="nav-link cursor" routerLink="products">Produkty</a>
+    </li>
+
+    <li class="nav-item" *ngIf="loginService.isUserLoggedIn()">
+      <a class="nav-link cursor" routerLink="orders">Objednávky</a>
+    </li>
+    <li class="nav-item dropdown" *ngIf="loginService.isAdminMode()">
+      <a href="#" class="nav-link dropdown-toggle" id="navbardrop2" data-toggle="dropdown">Slevy</a>
+      <div class="dropdown-menu">
+        <a class="dropdown-item cursor" routerLink="discounts">Výpis</a>
+        <a class="dropdown-item cursor" routerLink="discounts/add">Přidat</a>
+      </div>
+    </li>
+  </ul>
+  <ul class="navbar-nav" *ngIf="loginService.isUserLoggedIn()">
+    <li class="nav-item dropdown">
+      <a class="nav-link dropdown-toggle cursor" data-toggle="dropdown">{{loginService.getUsername()}}</a>
+      <div class="dropdown-menu dropdown-menu-right">
+        <a class="dropdown-item cursor" routerLink="logout">Odhlásit</a>
+        <a class="dropdown-item cursor" *ngIf="loginService.isUserAdmin()&&!loginService.isAdminMode()"
+           (click)="changeAdminMode()">Zapnout režim admina</a>
+        <a class="dropdown-item cursor" *ngIf="loginService.isUserAdmin()&&loginService.isAdminMode()"
+           (click)="changeAdminMode()">Vypnout režim admina</a>
+      </div>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link cursor" routerLink="cart"><i class="material-icons">shopping_cart</i>{{itemsInCart}}
+      </a>
+    </li>
+  </ul>
+  <ul class="navbar-nav" *ngIf="!loginService.isUserLoggedIn()">
+    <li class="nav-item">
+      <a class="nav-link cursor" data-toggle="modal" data-target="#LoginForm" #loginFormOpenButton>Přihlásit</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link cursor" data-toggle="modal" data-target="#RegisterForm">Registrovat</a>
+    </li>
+  </ul>
+</nav>
+
+<div id="LoginForm" class="modal fade">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Přihlášení</h4>
+        <button type="button" class="close" data-dismiss="modal" #loginFormCloseButton>
+          &times;
+        </button>
+      </div>
+      <div class="modal-body">
+        <app-login (loginFinished)="closeLoginFormMessage($event)"></app-login>
+      </div>
+    </div>
+  </div>
+</div>
+<div id="RegisterForm" class="modal fade">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Registrace</h4>
+        <button type="button" class="close" data-dismiss="modal" #registerFormCloseButton>&times;</button>
+      </div>
+      <div class="modal-body">
+        <app-register-customer (registerFinished)="closeRegisterFormMessage($event)"></app-register-customer>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--div *ngIf="loginService.isUserLoggedIn()">
+  {{checkToken()}}
+</div-->
+<!--h5>Upravit</h5>
+<dl>
+  <dt>Mezery</dt>
+  <dd>- skoro všude</dd>
+  <dt>Nadpisy a texty</dt>
+  <dd>- chce to hezčí</dd>
+</dl-->
+

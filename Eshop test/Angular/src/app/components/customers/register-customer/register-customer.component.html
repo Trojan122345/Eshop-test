@@ -1,0 +1,32 @@
+<div *ngIf="!(loadingState.isWorking()||loadingState.isSuccess())">
+  <form (ngSubmit)="insertNew()">
+    <div class="form-group">
+      <label for="registerName" class="form-label">Jméno</label>
+      <input id="registerName" name="registerName" type="text" class="form-control" [(ngModel)]="customerNew.name" required/>
+    </div>
+    <div class="form-group">
+      <label for="surname" class="form-label">Příjmení</label>
+      <input id="surname" name="surname" type="text" class="form-control" [(ngModel)]="customerNew.surname" required/>
+    </div>
+    <div class="form-group">
+      <label for="registerUsername" class="form-label">Uživatelské jméno</label>
+      <input id="registerUsername" name="registerUsername" type="text" class="form-control" [(ngModel)]="customerNew.username" required/>
+    </div>
+    <div class="form-group">
+      <label for="email" class="form-label">E-mail</label>
+      <input id="email" name="email" type="email" class="form-control" [(ngModel)]="customerNew.email" required/>
+    </div>
+    <div class="form-group">
+      <label for="registerPassword" class="form-label">Heslo</label>
+      <input id="registerPassword" name="registerPassword" type="password" class="form-control" [(ngModel)]="rawPassword" required/>
+    </div>
+    <div class="form-group">
+      <label for="registerPassword" class="form-label">Kontrolní Heslo</label>
+      <input id="registerPasswordControl" name="registerPasswordControl" type="password" class="form-control" [(ngModel)]="rawPasswordControl" required/>
+    </div>
+    <button type="submit" class="btn btn-primary form-control">Registrovat</button>
+  </form>
+</div>
+<div *ngIf="loadingState.isWorking()">Registruji...</div>
+<div *ngIf="loadingState.isSuccess()" class="alert alert-success">Úspěšně registrován</div>
+<div *ngIf="loadingState.isError()" class="alert alert-danger">{{loadingState.getError()}}</div>

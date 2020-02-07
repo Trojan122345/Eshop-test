@@ -1,0 +1,112 @@
+<div *ngIf="componentState.isCreate()">
+  <div *ngIf="componentState.isBadDiscount()" class="alert alert-danger">
+    Špatně vyplněný formulář. Prosím vyplňte slevu a zvolte správně datum
+  </div>
+  <h2 class="text-primary text-center mb-5">Tvorba slev</h2>
+  <h4 class="text-secondary">Produkt: </h4>
+  <select class="form-control mb-3" id="test" name="product" (change)="selectProductCreating($event)">
+    <option id="{{product.id}}" *ngFor="let product of products" [value]="product.id">{{product.name}}</option>
+  </select>
+  <div *ngIf="selectedProduct!=null">
+    <div class="row mb-5">
+      <div class="col-md-7">
+        <div class="row">
+          <h4 class="text-secondary">Náhled</h4>
+        </div>
+        <div class="row">
+          <div class="col-md-5">
+            <div class="row">
+              <div class="card">
+                <div class="card-header"><h4>Sleva číslo #</h4></div>
+                <div class="card-body">
+                  <div class="card-text">Sleva: {{discountPercent}}%</div>
+                  <div class="card-text">Datum
+                    od: {{discountsService.dateToUserFriendlyStr(getDateFromString(dateFrom))}}</div>
+                  <div class="card-text">Datum
+                    do: {{discountsService.dateToUserFriendlyStr(getDateFromString(dateTo))}}</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-7">
+            <div class="card">
+              <div class="card-header">{{selectedProduct.name}}</div>
+              <div class="card-body">
+                <div class="row">
+                  <div class="col">
+                    <img src="{{productsService.getPictureUrl(selectedProduct)}}" alt="{{selectedProduct.name}}"
+                         height="100"
+                         width="100">
+                    <div *ngIf="discountPercent>0">
+                      <p class="card-text">
+                        <del>{{selectedProduct.price.toFixed(2)}} CZK</del>
+                      </p>
+                      <h5 class="card-text text-warning">{{discountPrice.toFixed(2)}} CZK</h5>
+                    </div>
+                    <div *ngIf="!discountPercent>0">
+                      <p>{{selectedProduct.price.toFixed(2)}} CZK</p>
+                    </div>
+                    <button class="btn btn-success">Objednat</button>
+                  </div>
+                  <div class="col" *ngIf="discountPercent>0">
+                    <h4 class="card-text text-warning">Sleva!</h4>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-5 float-right">
+        <h3 class="text-info">Sleva: </h3>
+        <h4 class="text-secondary">Procenta: </h4>
+        <input class="form-control" type="number" min="0" max="90" (keyup)="updateDiscount($event)">
+        <h4 class="text-secondary">Datum slevy</h4>
+        <label for="dateFrom" class="form-label">Od</label>
+        <input class="form-control" type="date" id="dateFrom" name="dateFrom" (change)="checkDateTo()"
+               [(ngModel)]="dateFrom" min="{{min}}"><br>
+        <label for="dateFrom" class="form-label">Do</label>
+        <input class="form-control" type="date" id="dateTo" name="dateTo" [(ngModel)]="dateTo"
+               min="{{dateFrom}}">
+      </div>
+    </div>
+    <button (click)="createDiscount()" class="btn btn-success">Vytvořit slevu</button>
+  </div>
+</div>
+
+<div *ngIf="componentState.isShowFinishedDiscount()">
+  <div class="alert alert-success">Sleva úspěšně vytvořena</div>
+  <h2>Vytvořená sleva:</h2>
+  <div class="row">
+    <div class="col-4">
+      <div class="card">
+        <div class="card-header"><h4>Sleva číslo {{finishedDiscount.id}}</h4></div>
+        <div class="card-body">
+          <div class="card-text">Sleva: {{finishedDiscount.percent}}%</div>
+          <div class="card-text">Datum od: {{discountsService.dateToUserFriendlyStr(finishedDiscount.datefrom)}}</div>
+          <div class="card-text">Datum do: {{discountsService.dateToUserFriendlyStr(finishedDiscount.dateto)}}</div>
+        </div>
+      </div>
+    </div>
+    <div class="col-4">
+      <div class="card">
+        <div class="card-header"><h4>{{selectedProduct.name}}</h4></div>
+        <div class="card-body">
+          <div class="row">
+            <div class="col">
+              <img src="{{productsService.getPictureUrl(selectedProduct)}}" alt="{{selectedProduct.name}}" height="100"
+                   width="100">
+              <p class="card-text">
+                <del>{{selectedProduct.price.toFixed(2)}} CZK</del>
+              </p>
+              <h5 class="card-text text-warning">{{discountPrice.toFixed(2)}} CZK</h5>
+              <button class="btn btn-success">Objednat</button>
+            </div>
+            <div class="col">
+              <h4 class="card-text text-warning">Sleva!</h4>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

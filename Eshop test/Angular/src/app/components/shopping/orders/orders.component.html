@@ -1,0 +1,96 @@
+<div *ngIf="componentState.isShowAll()">
+  <h1 *ngIf="!loginService.isAdminMode()" class="text-primary text-center mb-5">Moje objednávky</h1>
+  <h1 *ngIf="loginService.isAdminMode()" class="text-primary text-center mb-5">Výpis všech objednávek</h1>
+  <div *ngIf="loadingState.isWorking()">
+
+    <span class="spinner-border spinner-border-sm"></span> Loading...
+  </div>
+  <div *ngIf="loadingState.isError()">
+    <div class="alert alert-danger">Spojení se serverem selhalo.</div>
+  </div>
+  <div *ngIf="loadingState.isSuccess()">
+    <table class="table table-light table-hover">
+      <thead class="thead-dark">
+      <tr>
+        <th>Číslo objednávky</th>
+        <th *ngIf="loginService.isAdminMode()">Uživatel</th>
+        <th>Adresa</th>
+        <th>Datum objednání</th>
+        <th>Celková cena</th>
+        <th>Druhů zboži</th>
+      </tr>
+      </thead>
+      <tbody *ngIf="!loginService.isAdminMode()">
+      <tr *ngFor="let orderInfo of orderInfos" (click)="orderOut(orderInfo.order.id)" data-toggle="tooltip"
+          title="Vypsat obsah objednávky" class="cursor">
+        <td>{{orderInfo.order.id}}</td>
+        <td>{{addressToString(orderInfo.order.address)}}</td>
+        <td>{{orderInfo.order.orderdate}}</td>
+        <td>{{getTotalOrderPrice(orderInfo.items)}}</td>
+        <td>{{orderInfo.items.length}}</td>
+      </tr>
+      </tbody>
+      <tbody *ngIf="loginService.isAdminMode()">
+      <tr *ngFor="let orderInfo of adminOrderInfos" (click)="orderOut(orderInfo.order.id)" data-toggle="tooltip"
+          title="Vypsat obsah objednávky" class="cursor">
+        <td>{{orderInfo.order.id}}</td>
+        <td>{{getCustomerStringByID(orderInfo.order.customerId)}}</td>
+        <td>{{addressToString(orderInfo.order.address)}}</td>
+        <td>{{orderInfo.order.orderdate}}</td>
+        <td>{{getTotalOrderPrice(orderInfo.items)}}</td>
+        <td>{{orderInfo.items.length}}</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div *ngIf="componentState.isShowOne()">
+  <h1 class="text-center text-primary">Objednávka číslo {{orderID}}</h1>
+  <table class="table table-light table-hover">
+    <thead class="thead-dark">
+    <tr>
+      <th></th>
+      <th>Název</th>
+      <th>Cena</th>
+      <th>Množství</th>
+      <th>Cena celkem</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let item of getCurrentOrder()">
+      {{loadProduct(item.productID)}}
+      <td><img src="{{productsService.getPictureUrl(currentProduct)}}" width="50" height="50"
+               alt="{{currentProduct.name}}"></td>
+      <td>{{currentProduct.name}}</td>
+      <td>{{item.pricePerProduct}}</td>
+      <td>{{item.amount}}</td>
+      <td>{{item.amount * currentProduct.discountPrice}}</td>
+    </tr>
+    </tbody>
+  </table>
+  <div class="row">
+      <div class="col-md-5" *ngIf="this.loginService.isAdminMode()">
+        <h2 class="text-secondary">Uživatel</h2>
+        <div class="card">
+          <div class="card-header"><h4>{{currentCustomer.name}} {{currentCustomer.surname}}</h4></div>
+          <div class="card-body">
+            <div class="row">
+              <div class="col">
+                <h5>ID:</h5>
+                <h5>Uživatelské jméno:</h5>
+                <h5>E-mail:</h5>
+              </div>
+              <div class="col">
+                <h5>{{currentCustomer.id}}</h5>
+                <h5>{{currentCustomer.username}}</h5>
+                <h5>{{currentCustomer.email}}</h5>
+              </div>
+            </div>
+          </div>
+      </div>
+    </div>
+    <div class="col-md">
+      <button (click)="getAllOrders()" class="btn btn-primary">Zpět na výpis objednávek</button>
+    </div>
+</div>
