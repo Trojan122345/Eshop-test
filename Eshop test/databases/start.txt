@@ -1,0 +1,1 @@
+..\bin\startNetworkServer.bat -noSecurityManager

@@ -1,0 +1,14 @@
+Fri Jan 31 20:39:52 CET 2020 : Síovı server Apache Derby - 10.14.2.0 - (1828579): spuštìn a pøipraven pøijímat pøipojení na portu 1527 v {3} 
+----------------------------------------------------------------
+Fri Jan 31 20:55:16 CET 2020:
+ Zavádìní serveru Derby verze The Apache Software Foundation - Apache Derby - 10.14.2.0 - (1828579): instance a816c00e-016f-fd1d-e634-000009aaaf18
+v adresáøi databáze C:\Users\Jan\Documents\Files\OSU\5. sem\OOPR3\Derby DB\db-derby-10.14.2.0-bin\databases\ProjectOoprDB sun.misc.Launcher$AppClassLoader@610455d6 
+
+java.vendor=Oracle Corporation
+java.runtime.version=1.8.0_221-b11
+user.dir=C:\Users\Jan\Documents\Files\OSU\5. sem\OOPR3\Derby DB\db-derby-10.14.2.0-bin\databases
+os.name=Windows 8.1
+os.arch=amd64
+os.version=6.3
+derby.system.home=null
+Byl spuštìn zavadìè tøídy databáze - derby.database.classpath=''
