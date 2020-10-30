@@ -24,6 +24,7 @@ export class ProductAlterComponent implements OnInit {
     this.alteredProduct.price = this.originalProduct.price;
     this.alteredProduct.pictureUrl = this.originalProduct.pictureUrl;
     this.alteredProduct.selling = this.originalProduct.selling;
+    this.alteredProduct.productTypeId = this.originalProduct.productTypeId;
   }
 
   test() {

@@ -4,8 +4,6 @@ import {DiscountsService} from '../Services/discounts.service';
 import {ProductsVM} from '../../../model/ProductsVM';
 import {OperState} from '../../../model/OperState';
 import {DiscountsVM} from '../../../model/DiscountsVM';
-import DateTimeFormat = Intl.DateTimeFormat;
-import {DiscountAddCompState} from '../discounts-add/DiscountAddCompState';
 
 @Component({
   selector: 'app-discounts',

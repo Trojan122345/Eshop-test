@@ -29,6 +29,9 @@
         <input id="pictureUrl" name="pictureUrl" type="text" class="form-control" [(ngModel)]="product.pictureUrl"
                required/>
       </div>
+      <select class="form-control" name="productType">
+        <option *ngFor="let productType of productTypes" [value]="productType.id" id="{{productType.id}}">{{productType.productType}}</option>
+      </select>
       <button type="button" class="btn btn-primary form-control" (click)="insertNew()">Přidat</button>
     </form>
   </div>

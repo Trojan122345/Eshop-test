@@ -23,13 +23,14 @@ public class ProductsService {
         this.productsRepository = productsRepository;
     }
 
-    public ProductsEntity create(String name, double price, String pictureUrl){
+    public ProductsEntity create(String name, double price, String pictureUrl, int productTypeId){
         ProductsEntity ret = new ProductsEntity();
 
         ret.setName(name);
         ret.setPrice(price);
         ret.setPictureurl(pictureUrl);
         ret.setIsselling(true);
+        ret.setProducttypeid(productTypeId);
 
         this.productsRepository.save(ret);
 
@@ -56,6 +57,7 @@ public class ProductsService {
         dbItem.setPrice(entity.getPrice());
         dbItem.setPictureurl(entity.getPictureurl());
         dbItem.setIsselling(entity.isIsselling());
+        dbItem.setProducttypeid(entity.getProducttypeid());
 
         this.productsRepository.save(dbItem);
     }

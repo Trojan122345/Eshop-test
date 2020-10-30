@@ -22,7 +22,7 @@ public class ProductsController {
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     public ProductsVM create(
             @RequestBody ProductsVM product) {
-        ProductsEntity temp = this.productsService.create(product.getName(), product.getPrice(), product.getPictureUrl());
+        ProductsEntity temp = this.productsService.create(product.getName(), product.getPrice(), product.getPictureUrl(), product.getProductTypeId());
         return ProductsVM.convertFromEntity(temp, temp.getPrice());
     }
 

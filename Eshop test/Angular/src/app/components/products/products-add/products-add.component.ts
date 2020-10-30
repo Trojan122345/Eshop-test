@@ -3,6 +3,8 @@ import {ProductsVM} from '../../../model/ProductsVM';
 import {OperState} from '../../../model/OperState';
 import {ProductsService} from '../Services/products.service';
 import {ActivatedRoute, Router} from '@angular/router';
+import {ProductTypesService} from '../../productTypes/Services/product-types.service';
+import {ProductTypeVM} from '../../../model/ProductTypeVM';
 
 @Component({
   selector: 'app-products-add',
@@ -11,22 +13,32 @@ import {ActivatedRoute, Router} from '@angular/router';
 })
 export class ProductsAddComponent implements OnInit {
   product: ProductsVM = new ProductsVM();
+  productTypes: ProductTypeVM[];
   loadingState = new OperState();
   finished: boolean;
 
   constructor(
     private productsService: ProductsService,
+    private productTypesService: ProductTypesService,
     private activatedRoute: ActivatedRoute,
     private router: Router
   ) {
   }
 
   ngOnInit() {
-    this.loadingState.setWorking();
+    this.productTypesService.list().subscribe(
+      res => {
+        this.productTypes = res;
+        this.loadingState.setWorking();
+      },
+      err => {
+        this.loadingState.setError(err);
+      }
+    );
   }
 
   checkForm(): boolean {
-    if (this.product.name == null || this.product.price == null || this.product.pictureUrl == null || this.product.price<=0) {
+    if (this.product.name == null || this.product.price == null || this.product.pictureUrl == null || this.product.price <= 0) {
       return false;
     }
     return true;

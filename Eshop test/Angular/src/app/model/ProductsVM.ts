@@ -5,4 +5,5 @@ export class ProductsVM {
   discountPrice: number;
   pictureUrl: string;
   selling: boolean;
+  productTypeId: number;
 }

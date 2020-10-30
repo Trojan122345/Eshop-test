@@ -9,6 +9,7 @@ public class ProductsVM {
     private Double discountPrice;
     private String pictureUrl;
     private boolean isSelling;
+    private int productTypeId;
 
     public static ProductsVM convertFromEntity(ProductsEntity entity, Double discountPrice) {
         ProductsVM ret = new ProductsVM();
@@ -19,6 +20,7 @@ public class ProductsVM {
         ret.setPictureUrl(entity.getPictureurl());
         ret.setDiscountPrice(discountPrice);
         ret.setSelling(entity.isIsselling());
+        ret.setProductTypeId(entity.getProducttypeid());
 
         return ret;
     }
@@ -31,6 +33,7 @@ public class ProductsVM {
         ret.setPrice(this.getPrice());
         ret.setPictureurl(this.getPictureUrl());
         ret.setIsselling(this.isSelling());
+        ret.setProducttypeid(this.getProductTypeId());
 
         return ret;
     }
@@ -81,5 +84,13 @@ public class ProductsVM {
 
     public void setSelling(boolean selling) {
         isSelling = selling;
+    }
+
+    public int getProductTypeId() {
+        return productTypeId;
+    }
+
+    public void setProductTypeId(int productType) {
+        this.productTypeId = productType;
     }
 }

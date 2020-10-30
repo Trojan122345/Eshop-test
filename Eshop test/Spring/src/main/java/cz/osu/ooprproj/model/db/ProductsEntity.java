@@ -11,6 +11,13 @@ public class ProductsEntity {
     private Double price;
     private String pictureurl;
     private boolean isselling;
+    private Integer producttypeid;
+
+    @Basic
+    @Column(name = "ISSELLING", nullable = false)
+    public Boolean getIsselling() {
+        return isselling;
+    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -83,7 +90,25 @@ public class ProductsEntity {
         return isselling;
     }
 
+    public void setIsselling(Boolean isselling) {
+        this.isselling = isselling;
+    }
+
     public void setIsselling(boolean isselling) {
         this.isselling = isselling;
+    }
+
+    @Basic
+    @Column(name = "PRODUCTTYPEID", nullable = false)
+    public Integer getProducttypeid() {
+        return producttypeid;
+    }
+
+    public void setProducttypeid(Integer producttypeid) {
+        this.producttypeid = producttypeid;
+    }
+
+    public void setProducttypeid(int producttypeid) {
+        this.producttypeid = producttypeid;
     }
 }
