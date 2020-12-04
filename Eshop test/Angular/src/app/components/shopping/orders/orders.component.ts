@@ -40,26 +40,27 @@ export class OrdersComponent implements OnInit {
       orders => {
         let itemsProcessed = 0;
         orders.forEach(o => {
-          const info = new OrderInfo();
-          info.order = o;
-          this.ordersService.getOrderItems(o.id.toString(10)).subscribe(
-            res => {
-              itemsProcessed++;
-              info.items = res;
-              this.orderInfos.push(info);
-              if (itemsProcessed === orders.length) {
-                this.loadingState.setSuccess();
-              }
-            },
-            err => this.loadingState.setError(err)
-          );
-        });
+            const info = new OrderInfo();
+            info.order = o;
+            this.ordersService.getOrderItems(o.id.toString(10)).subscribe(
+              res => {
+                itemsProcessed++;
+                info.items = res;
+                this.orderInfos.push(info);
+                if (itemsProcessed === orders.length) {
+                  this.orderInfos.sort((oi1, oi2) => oi2.order.id - oi1.order.id);
+                  this.loadingState.setSuccess();
+                }
+              },
+              err => this.loadingState.setError(err)
+            );
+          });
       },
       err => this.loadingState.setError(err)
     );
 
     this.loadingState.setWorking();
-    this.productsService.listSelling().subscribe(
+    this.productsService.listAll(true).subscribe(
       res => {
         this.products = res;
         this.loadingState.setSuccess();
@@ -81,6 +82,7 @@ export class OrdersComponent implements OnInit {
                 info.items = res;
                 this.adminOrderInfos.push(info);
                 if (itemsProcessed === orders.length) {
+                  this.orderInfos.sort((oi1, oi2) => oi2.order.id - oi1.order.id);
                   this.loadingState.setSuccess();
                 }
               },

@@ -65,32 +65,32 @@
       <td>{{currentProduct.name}}</td>
       <td>{{item.pricePerProduct}}</td>
       <td>{{item.amount}}</td>
-      <td>{{item.amount * currentProduct.discountPrice}}</td>
+      <td>{{item.amount * item.pricePerProduct}}</td>
     </tr>
     </tbody>
   </table>
   <div class="row">
-      <div class="col-md-5" *ngIf="this.loginService.isAdminMode()">
-        <h2 class="text-secondary">Uživatel</h2>
-        <div class="card">
-          <div class="card-header"><h4>{{currentCustomer.name}} {{currentCustomer.surname}}</h4></div>
-          <div class="card-body">
-            <div class="row">
-              <div class="col">
-                <h5>ID:</h5>
-                <h5>Uživatelské jméno:</h5>
-                <h5>E-mail:</h5>
-              </div>
-              <div class="col">
-                <h5>{{currentCustomer.id}}</h5>
-                <h5>{{currentCustomer.username}}</h5>
-                <h5>{{currentCustomer.email}}</h5>
-              </div>
+    <div class="col-md-5" *ngIf="this.loginService.isAdminMode()">
+      <h2 class="text-secondary">Uživatel</h2>
+      <div class="card">
+        <div class="card-header"><h4>{{currentCustomer.name}} {{currentCustomer.surname}}</h4></div>
+        <div class="card-body">
+          <div class="row">
+            <div class="col">
+              <h5>ID:</h5>
+              <h5>Uživatelské jméno:</h5>
+              <h5>E-mail:</h5>
+            </div>
+            <div class="col">
+              <h5>{{currentCustomer.id}}</h5>
+              <h5>{{currentCustomer.username}}</h5>
+              <h5>{{currentCustomer.email}}</h5>
             </div>
           </div>
+        </div>
       </div>
     </div>
     <div class="col-md">
       <button (click)="getAllOrders()" class="btn btn-primary">Zpět na výpis objednávek</button>
     </div>
-</div>
+  </div>

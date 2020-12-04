@@ -11,14 +11,7 @@
       <a class="nav-link cursor" routerLink="customers">Zákazníci</a>
     </li>
     <li class="nav-item dropdown" *ngIf="loginService.isAdminMode()">
-      <a href="#" class="nav-link dropdown-toggle" id="navbardrop" data-toggle="dropdown">Produkty</a>
-      <div class="dropdown-menu">
-        <a class="dropdown-item cursor" routerLink="products">Výpis</a>
-        <a class="dropdown-item cursor" routerLink="products/add">Přidat</a>
-      </div>
-    </li>
-    <li class="nav-item" *ngIf="!loginService.isAdminMode()">
-      <a class="nav-link cursor" routerLink="products">Produkty</a>
+      <a href="#" class="nav-link cursor" routerLink="products/add">Přidat produkt</a>
     </li>
 
     <li class="nav-item" *ngIf="loginService.isUserLoggedIn()">

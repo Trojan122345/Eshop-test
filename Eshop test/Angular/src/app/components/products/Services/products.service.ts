@@ -24,13 +24,26 @@ export class ProductsService {
     return this.http.post<ProductsVM>(url, item);
   }
 
-  public listSelling(): Observable<ProductsVM[]> {
-    const url = this.buildUrl('/listSelling');
-    return this.http.get<ProductsVM[]>(url);
-  }
+  public list(startIndex: string, count: string, productTypeId: string, selling: boolean): Observable<ProductsVM[]> {
+    let url = this.buildUrl('/list');
+    if (selling) {
+      url += '/Selling/byType';
+    } else {
+      url += '/NotSelling/byType';
+    }
+    let httpParams = new HttpParams().set('startIndex', startIndex);
+    httpParams = httpParams.set('count', count);
+    httpParams = httpParams.set('productTypeId', productTypeId);
 
-  public listNotSelling(): Observable<ProductsVM[]> {
-    const url = this.buildUrl('/listNotSelling');
+    return this.http.get<ProductsVM[]>(url, {params: httpParams});
+  }
+  public listAll(selling: boolean): Observable<ProductsVM[]>{
+    let url = this.buildUrl('/list');if (selling) {
+      url += '/Selling';
+    } else {
+      url += '/NotSelling';
+    }
+
     return this.http.get<ProductsVM[]>(url);
   }
 

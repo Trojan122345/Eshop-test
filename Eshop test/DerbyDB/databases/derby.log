@@ -1,7 +1,7 @@
-Fri Oct 30 14:06:26 CET 2020 : Síovı server Apache Derby - 10.14.2.0 - (1828579): spuštìn a pøipraven pøijímat pøipojení na portu 1527 v {3} 
+Thu Nov 05 01:48:13 CET 2020 : Síovı server Apache Derby - 10.14.2.0 - (1828579): spuštìn a pøipraven pøijímat pøipojení na portu 1527 v {3} 
 ----------------------------------------------------------------
-Fri Oct 30 14:13:48 CET 2020:
- Zavádìní serveru Derby verze The Apache Software Foundation - Apache Derby - 10.14.2.0 - (1828579): instance a816c00e-0175-799d-ccf5-000009aba1b8
+Thu Nov 05 01:52:59 CET 2020:
+ Zavádìní serveru Derby verze The Apache Software Foundation - Apache Derby - 10.14.2.0 - (1828579): instance a816c00e-0175-95e0-186f-000009ab9a18
 v adresáøi databáze C:\Users\Jan\Documents\GitHub\Java-tests\Eshop test\DerbyDB\databases\ProjectOoprDB sun.misc.Launcher$AppClassLoader@610455d6 
 
 java.vendor=Oracle Corporation

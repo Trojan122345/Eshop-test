@@ -36,7 +36,27 @@ public class ProductsController {
     }
 
     @CrossOrigin
-    @RequestMapping(value = "/listSelling", method = RequestMethod.GET)
+    @RequestMapping(value = "/list/Selling/byType")
+    public List<ProductsVM> listSelling(@RequestParam(name = "startIndex") String startIndexS,
+                                        @RequestParam(name = "count") String countS,
+                                        @RequestParam(name = "productTypeId") String productTypeIdS) {
+        int startIndex = Integer.parseInt(startIndexS);
+        int count = Integer.parseInt(countS);
+        int productTypeId = Integer.parseInt(productTypeIdS);
+
+        List<ProductsVM> tempList = this.productsService.list().stream()
+                .filter(p -> p.isIsselling())
+                .filter(p -> p.getProducttypeid() == productTypeId)
+                .map(p -> ProductsVM.convertFromEntity(p, productsService.getDiscountPrice(p)))
+                .collect(Collectors.toList());
+        if (startIndex + count > tempList.size() || count < 0)
+            return tempList.subList(startIndex, tempList.size());
+        else
+            return tempList.subList(startIndex, startIndex + count);
+    }
+
+    @CrossOrigin
+    @RequestMapping(value = "/list/Selling", method = RequestMethod.GET)
     public List<ProductsVM> listSelling() {
         return this.productsService.list().stream()
                 .filter(p -> p.isIsselling())
@@ -55,9 +75,28 @@ public class ProductsController {
 
         return productVM;
     }
+    @CrossOrigin
+    @RequestMapping(value = "/list/NotSelling/byType")
+    public List<ProductsVM> listNotSelling(@RequestParam(name = "startIndex") String startIndexS,
+                                        @RequestParam(name = "count") String countS,
+                                        @RequestParam(name = "productTypeId") String productTypeIdS) {
+        int startIndex = Integer.parseInt(startIndexS);
+        int count = Integer.parseInt(countS);
+        int productTypeId = Integer.parseInt(productTypeIdS);
+
+        List<ProductsVM> tempList = this.productsService.list().stream()
+                .filter(p -> !p.isIsselling())
+                .filter(p -> p.getProducttypeid() == productTypeId)
+                .map(p -> ProductsVM.convertFromEntity(p, productsService.getDiscountPrice(p)))
+                .collect(Collectors.toList());
+        if (startIndex + count > tempList.size() || count < 0)
+            return tempList.subList(startIndex, tempList.size());
+        else
+            return tempList.subList(startIndex, startIndex + count);
+    }
 
     @CrossOrigin
-    @RequestMapping(value = "/listNotSelling", method = RequestMethod.GET)
+    @RequestMapping(value = "/list/NotSelling", method = RequestMethod.GET)
     public List<ProductsVM> listNotSelling() {
         return this.productsService.list().stream()
                 .filter(p -> !p.isIsselling())

@@ -4,7 +4,6 @@ import {ProductsComponent} from './components/products/products/products.compone
 import {CustomersComponent} from './components/customers/customers/customers.component';
 import {ProductsAddComponent} from './components/products/products-add/products-add.component';
 import {RegisterCustomerComponent} from './components/customers/register-customer/register-customer.component';
-import {LoginComponent} from './components/auth/login/login.component';
 import {LogoutComponent} from './components/auth/logout/logout.component';
 import {AuthGuardUserService} from './components/auth/Services/AuthGuard/auth-guard-user.service';
 import {AuthGuardAdminService} from './components/auth/Services/AuthGuard/auth-guard-admin.service';
@@ -13,12 +12,14 @@ import {OrdersComponent} from './components/shopping/orders/orders.component';
 import {InvalidTokenComponent} from './components/auth/invalid-token/invalid-token.component';
 import {DiscountsComponent} from './components/discounts/discounts/discounts.component';
 import {DiscountsAddComponent} from './components/discounts/discounts-add/discounts-add.component';
+import {ProductAlterComponent} from './components/products/product-alter/product-alter.component';
 
 
 const routes: Routes = [
-  {path: '', pathMatch: 'full', redirectTo: '/products'},
-  {path: 'products', component: ProductsComponent},
+  {path: '', pathMatch: 'full', redirectTo: '/products/1'},
   {path: 'products/add', component: ProductsAddComponent, canActivate: [AuthGuardAdminService]},
+  {path: 'products/:productID', component: ProductsComponent},
+  {path: 'products/alter/:id', component: ProductAlterComponent, canActivate: [AuthGuardAdminService]},
   {path: 'customers', component: CustomersComponent, canActivate: [AuthGuardAdminService]},
   {path: 'customers/register', component: RegisterCustomerComponent},
   {path: 'logout', component: LogoutComponent, canActivate: [AuthGuardUserService]},

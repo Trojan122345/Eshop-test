@@ -1,88 +1,86 @@
-<div *ngIf="!isAlterProduct||!loginService.isAdminMode()">
-  <h1 *ngIf="!loginService.isAdminMode()" class="text-center text-primary mb-5">{{checkNotAdminMode()}}Naše nabídka</h1>
-  <h1 *ngIf="loginService.isAdminMode()" class="text-center text-primary mb-5">Produkty v nabídce</h1>
-  <div *ngIf="loadingState.isWorking()">
-    <span class="spinner-border spinner-border-sm"></span> Loading...
+<div *ngIf="loadingTypeState.isSuccess()">
+  <h1 class="text-center text-primary mb-5">{{productType.typeName}}</h1>
+  <ul class="pagination pagination-md">
+    <li *ngFor="let page of pages" class="page-item">
+      <button type="button" class="page-link" (click)="loadPage(page)">{{page}}</button>
+    </li>
+  </ul>
+</div>
+<div *ngIf="loadingProductState.isWorking() || loadingTypeState.isWorking()">
+  <span class="spinner-border spinner-border-sm"></span>
+</div>
+<div *ngIf="loadingProductState.isError() || loadingTypeState.isError()">
+  <div class="alert alert-danger">Spojení se serverem selhalo.</div>
+</div>
+<div *ngIf="loadingProductState.isSuccess()">
+  <div *ngIf="loginService.isAdminMode()" class="mb-3">
+    <button *ngIf="!this.showAdminProducts" class="btn-secondary btn btn-md" (click)="changeShowAdminProducts()">
+      Zobrazit vyřazené produkty
+    </button>
+    <button *ngIf="this.showAdminProducts" class="btn-secondary btn btn-md" (click)="changeShowAdminProducts()">
+      Zobrazit produkty v prodeji
+    </button>
   </div>
-  <div *ngIf="loadingState.isError()">
-    <div class="alert alert-danger">Spojení se serverem selhalo.</div>
-  </div>
-  <div *ngIf="loadingState.isSuccess()">
-    <div *ngIf="loginService.isAdminMode()" class="mb-3">
-      <button *ngIf="!this.showAdminProducts" class="btn-secondary btn btn-md" (click)="changeShowAdminProducts()">
-        Zobrazit vyřazené produkty
-      </button>
-      <button *ngIf="this.showAdminProducts" class="btn-secondary btn btn-md" (click)="changeShowAdminProducts()">
-        Zobrazit produkty v prodeji
-      </button>
-    </div>
-    <ul class="pagination pagination-md">
-      <li *ngFor="let page of pages" class="page-item">
-        <button type="button" class="page-link" (click)="loadPage(page)">{{page}}</button>
-      </li>
-    </ul>
-    <div class="row">
-      <div class="col-lg-4" *ngFor="let product of productsPage">
-        <div class="card mb-4">
-          <div class="card-header">{{product.name}}</div>
-          <div class="card-body" *ngIf="!loginService.isAdminMode()">
-            <div class="row mb-2">
-              <div class="col">
-                <img src="{{productService.getPictureUrl(product)}}" alt="{{product.name}}" height="100"
-                     width="100">
-                <div *ngIf="product.price!=product.discountPrice">
-                  <p class="card-text">
-                    <del>{{product.price.toFixed(2)}} CZK</del>
-                  </p>
-                  <h5 class="card-text text-warning">{{product.discountPrice.toFixed(2)}} CZK</h5>
-                </div>
-                <div *ngIf="product.price==product.discountPrice">
-                  <p class="card-text">&nbsp;</p>
-                  <h5 class="card-text">{{product.discountPrice.toFixed(2)}} CZK</h5>
-                </div>
+  <div class="row">
+    <div class="col-lg-4" *ngFor="let product of products">
+      <div class="card mb-4">
+        <div class="card-header">{{product.name}}</div>
+        <div class="card-body" *ngIf="!loginService.isAdminMode()">
+          <div class="row mb-2">
+            <div class="col">
+              <img src="{{productService.getPictureUrl(product)}}" alt="{{product.name}}" height="100"
+                   width="100">
+              <div *ngIf="product.price!=product.discountPrice">
+                <p class="card-text">
+                  <del>{{product.price.toFixed(2)}} CZK</del>
+                </p>
+                <h5 class="card-text text-warning">{{product.discountPrice.toFixed(2)}} CZK</h5>
               </div>
-              <div class="col">
-                <h4 class="card-text text-warning" *ngIf="product.price!=product.discountPrice">Sleva!</h4>
+              <div *ngIf="product.price==product.discountPrice">
+                <p class="card-text">&nbsp;</p>
+                <h5 class="card-text">{{product.discountPrice.toFixed(2)}} CZK</h5>
               </div>
             </div>
-            <div class="row" *ngIf="loginService.isUserLoggedIn()">
-              <button *ngIf="product.selling" (click)="focusProduct(product.id)" class="btn btn-success btn-md stretched-link"
-                      data-toggle="modal"
-                      data-target="#orderProduct">Objednat
-              </button>
+            <div class="col">
+              <h4 class="card-text text-warning" *ngIf="product.price!=product.discountPrice">Sleva!</h4>
             </div>
           </div>
-          <div class="card-body" *ngIf="loginService.isAdminMode()">
-            <img src="{{productService.getPictureUrl(product)}}" alt="{{product.name}}" height="100"
-                 width="100">
-            <p class="card-text">{{product.price.toFixed(2)}} CZK</p>
-            <div class="row">
-              <button (click)="alterProduct(product.id)" class="btn btn-secondary btn-md">Upravit produkt</button>
-            </div>
-            <div class="row" *ngIf="!showAdminProducts">
-              <button (click)="focusProduct(product.id)" class="btn btn-danger btn-md" data-toggle="modal"
-                      data-target="#confirmPutProductOut">Vyřadit z prodeje
-              </button>
-            </div>
-            <div class="row" *ngIf="showAdminProducts">
-              <button (click)="focusProduct(product.id)" class="btn btn-success btn-md" data-toggle="modal"
-                      data-target="#confirmPutProductBack">Zařadit zpět do prodeje
-              </button>
-            </div>
+          <div class="row" *ngIf="loginService.isUserLoggedIn()">
+            <button *ngIf="product.selling" (click)="focusProduct(product.id)"
+                    class="btn btn-success btn-md stretched-link"
+                    data-toggle="modal"
+                    data-target="#orderProduct">Objednat
+            </button>
+          </div>
+        </div>
+
+        <div class="card-body" *ngIf="loginService.isAdminMode()">
+          <img src="{{productService.getPictureUrl(product)}}" alt="{{product.name}}" height="100"
+               width="100">
+          <p class="card-text">{{product.price.toFixed(2)}} CZK</p>
+          <div class="row">
+            <button (click)="alterProduct(product.id)" class="btn btn-secondary btn-md">Upravit produkt</button>
+          </div>
+          <div class="row" *ngIf="!showAdminProducts">
+            <button (click)="focusProduct(product.id)" class="btn btn-danger btn-md" data-toggle="modal"
+                    data-target="#confirmPutProductOut">Vyřadit z prodeje
+            </button>
+          </div>
+          <div class="row" *ngIf="showAdminProducts">
+            <button (click)="focusProduct(product.id)" class="btn btn-success btn-md" data-toggle="modal"
+                    data-target="#confirmPutProductBack">Zařadit zpět do prodeje
+            </button>
           </div>
         </div>
       </div>
     </div>
   </div>
+  <button (click)="loadMore()" *ngIf="currentPage<pages.length" class="btn btn-primary btn-md">Načíst Další
+  </button>
 </div>
 
-
-<div *ngIf="isAlterProduct&&loginService.isAdminMode()">
-  <app-product-alter (showAll)="showAllProducts($event)"
-                     (finishedAlterProduct)="finishAlteration($event)"
-                     [productToAlter]="returnProductToAlter(focusedProduct.id)"
-  >
-  </app-product-alter>
+<div *ngIf="loadingMoreProductsState.isWorking()">
+  <span class="spinner-border spinner-border-sm"></span>
 </div>
 
 <div *ngIf="loginService.isAdminMode()&&focusedProduct!=null">

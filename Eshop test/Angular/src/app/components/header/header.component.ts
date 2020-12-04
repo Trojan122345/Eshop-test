@@ -58,11 +58,9 @@ export class HeaderComponent implements OnInit {
 
   checkLogin() {
     this.loginService.checkToken();
-    console.log('check1');
     setTimeout(function func(loginservice: AuthenticationService) {
       if (loginservice.isUserLoggedIn()) {
         loginservice.checkToken();
-        console.log('check2');
       }
       setTimeout(func, 1000 * 60, loginservice);
     },

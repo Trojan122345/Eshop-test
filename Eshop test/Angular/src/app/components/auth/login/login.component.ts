@@ -35,7 +35,7 @@ export class LoginComponent implements OnInit {
       this.loadingState.setWorking();
       (this.loginService.authenticate(this.username, this.password).subscribe(
           data => {
-            this.router.navigate(['products']);
+            this.router.navigate(['']);
             this.invalidLogin = false;
             this.loadingState.setSuccess();
             this.shoppingCartService.loadCartIDFromDB();

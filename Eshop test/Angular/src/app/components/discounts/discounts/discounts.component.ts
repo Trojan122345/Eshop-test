@@ -37,7 +37,7 @@ export class DiscountsComponent implements OnInit {
             this.addDiscount(d);
             this.discountsAll.push(d);
           });
-        this.productsService.listSelling().subscribe(
+        this.productsService.listAll(true).subscribe(
           products => {
             this.products = products;
             this.loadingState.setSuccess();

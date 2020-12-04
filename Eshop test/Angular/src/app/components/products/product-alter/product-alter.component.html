@@ -1,15 +1,19 @@
 <h1 class="text-primary text-center">Upravit produkt</h1>
-<div *ngIf="loadingState.isSuccess()" class="alert alert-success">Produkt úspěšně upraven</div>
-<div *ngIf="loadingState.isError()" class="alert alert-danger">Při úpravě nastala chyba</div>
+<div *ngIf="sendingState.isSuccess()" class="alert alert-success">Produkt úspěšně upraven</div>
+<div *ngIf="sendingState.isError()" class="alert alert-danger">Při úpravě nastala chyba</div>
 <h3 class="text-secondary">Náhled: </h3>
-<div class="row">
+<div *ngIf="loadingState.isWorking()">
+  <span class="spinner-border spinner-border-sm"></span>
+</div>
+<div *ngIf="loadingState.isSuccess()" class="row">
   <div class="col-md-4">
     <div class="card">
-      <div class="card-header">{{this.alteredProduct.name}}</div>
+      <div class="card-header">{{this.productToAlter.name}}</div>
       <div class="card-body">
-        <img id="{{alteredProduct.id}}" src="{{productsService.getPictureUrl(alteredProduct)}}" alt="{{alteredProduct.name}}" height="100"
+        <img id="{{productToAlter.id}}" src="{{productsService.getPictureUrl(productToAlter)}}"
+             alt="{{productToAlter.name}}" height="100"
              width="100">
-        <p class="card-text">{{alteredProduct.price.toFixed(2)}} CZK</p>
+        <p class="card-text">{{productToAlter.price.toFixed(2)}} CZK</p>
         <button class="btn btn-success btn-md" (click)="test()">Objednat</button>
       </div>
     </div>
@@ -18,26 +22,35 @@
     <form>
       <div class="form-group">
         <label for="name" class="form-label">Název</label>
-        <input id="name" name="name" class="form-control" type="text" [(ngModel)]="alteredProduct.name">
+        <input id="name" name="name" class="form-control" type="text" [(ngModel)]="productToAlter.name">
       </div>
       <div class="form-group">
         <label for="price" class="form-label">Cena</label>
-        <input id="price" name="price" class="form-control" type="number" [(ngModel)]="alteredProduct.price">
+        <input id="price" name="price" class="form-control" type="number" [(ngModel)]="productToAlter.price">
       </div>
       <div class="form-group">
         <label for="imgURL" class="form-label">Adresa obrázku</label>
-        <input id="imgURL" name="imgURL" class="form-control" type="text" [(ngModel)]="alteredProduct.pictureUrl">
+        <input id="imgURL" name="imgURL" class="form-control" type="text" [(ngModel)]="productToAlter.pictureUrl">
       </div>
       <div class="form-group">
-        <label for="selling" class="form-label">V prodeji</label>
-        <input id="selling" name="selling" class="form-control" type="checkbox" [(ngModel)]="alteredProduct.selling">
+        <label for="category" class="form-label">Kategorie</label>
+        <select class="form-control" id="category" name="productType" (change)="changeProductType($event)">
+          <option *ngFor="let productType of productTypes" [value]="productType.id"
+                  id="{{productType.id}}"
+                  [selected]="productType.id == productToAlter.productTypeId">{{productType.typeName}}</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label *ngIf="productToAlter.selling" for="selling" class="form-label alert-success">Je v prodeji</label>
+        <label *ngIf="!productToAlter.selling" for="selling" class="form-label alert-danger">Není v prodeji</label>
+        <input id="selling" name="selling" class="form-control btn btn-primary" type="checkbox" [(ngModel)]="productToAlter.selling">
       </div>
     </form>
   </div>
 </div>
 <div class="row mb-3">
-<button class="btn-warning btn" (click)="alterProduct()">Uložit změny</button>
+  <button class="btn-warning btn" (click)="alterProduct()">Uložit změny</button>
 </div>
-<div class="row mb-3">
-<button class="btn-primary btn" (click)="showAllProducts()">Zpět</button>
-</div>
+<!--div class="row mb-3">
+  <button class="btn-primary btn" (click)="showAllProducts()">Zpět</button>
+</div-->

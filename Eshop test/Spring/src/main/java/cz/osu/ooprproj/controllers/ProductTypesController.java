@@ -2,10 +2,13 @@ package cz.osu.ooprproj.controllers;
 
 import cz.osu.ooprproj.model.db.ProductTypeEntity;
 import cz.osu.ooprproj.model.vm.ProductTypeVM;
+import cz.osu.ooprproj.model.vm.ProductsVM;
 import cz.osu.ooprproj.services.ProductTypesService;
+import cz.osu.ooprproj.services.ProductsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.persistence.InheritanceType;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -13,9 +16,12 @@ import java.util.stream.Collectors;
 @RequestMapping("/api/productTypes")
 public class ProductTypesController {
     private final ProductTypesService productTypesService;
+    private final ProductsService productsService;
 
-    public ProductTypesController(@Autowired ProductTypesService productTypesService) {
+    public ProductTypesController(@Autowired ProductTypesService productTypesService,
+                                  @Autowired ProductsService productsService) {
         this.productTypesService = productTypesService;
+        this.productsService = productsService;
     }
 
     @CrossOrigin
@@ -28,7 +34,6 @@ public class ProductTypesController {
     @CrossOrigin
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     public List<ProductTypeVM> list() {
-        System.out.println("xxx LIST xxx");
         return this.productTypesService.list()
                 .stream()
                 .map(pt -> ProductTypeVM.convertFromEntity(pt))
@@ -47,6 +52,30 @@ public class ProductTypesController {
     @RequestMapping(value = "/update", method = RequestMethod.PATCH)
     public void update(@RequestBody ProductTypeVM productType) {
         this.productTypesService.update(productType.convertToEntity());
+    }
+
+    @CrossOrigin
+    @RequestMapping(value = "/getCount/selling", method=RequestMethod.GET)
+    public int getCountSelling(@RequestParam(name = "id") String idS){
+        int id = Integer.parseInt(idS);
+
+        return this.productsService.list().stream()
+                .filter(p -> p.isIsselling())
+                .filter(p -> p.getProducttypeid() == id)
+                .map(p -> ProductsVM.convertFromEntity(p, productsService.getDiscountPrice(p)))
+                .collect(Collectors.toList()).size();
+    }
+
+    @CrossOrigin
+    @RequestMapping(value="/getCount/notSelling", method = RequestMethod.GET)
+    public int getCountNotSelling(@RequestParam(name="id") String idS){
+        int id = Integer.parseInt(idS);
+
+        return this.productsService.list().stream()
+                .filter(p -> !p.isIsselling())
+                .filter(p -> p.getProducttypeid() == id)
+                .map(p -> ProductsVM.convertFromEntity(p, productsService.getDiscountPrice(p)))
+                .collect(Collectors.toList()).size();
     }
 
     /*@CrossOrigin

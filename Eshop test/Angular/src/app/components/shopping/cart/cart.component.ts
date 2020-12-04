@@ -43,7 +43,7 @@ export class CartComponent implements OnInit {
       this.componentState.setViewCart();
       this.wasAltered = false;
       this.cart = this.shoppingCartService.getCartFromSession();
-      this.productsService.listSelling().subscribe(
+      this.productsService.listAll(true).subscribe(
         res => {
           this.products = res;
           this.updateTotalPrice();

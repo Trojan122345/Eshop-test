@@ -40,4 +40,16 @@ export class ProductTypesService {
 
     return this.http.get<ProductTypeVM[]>(url);
   }
+
+  public getCount(id: string, selling: boolean): Observable<number> {
+    let url = this.buildUrl('/getCount');
+    if (selling) {
+      url += '/selling';
+    } else {
+      url += '/notSelling';
+    }
+    const httpParams = new HttpParams().set('id', id);
+
+    return this.http.get<number>(url, {params: httpParams});
+  }
 }

@@ -13,12 +13,6 @@ public class ProductsEntity {
     private boolean isselling;
     private Integer producttypeid;
 
-    @Basic
-    @Column(name = "ISSELLING", nullable = false)
-    public Boolean getIsselling() {
-        return isselling;
-    }
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID", nullable = false)

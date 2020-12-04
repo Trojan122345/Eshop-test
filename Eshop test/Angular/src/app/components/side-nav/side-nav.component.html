@@ -1,0 +1,6 @@
+<ul class="nav flex-column">
+  <li *ngFor="let productType of productTypes" class="nav-item">
+    <a class="nav-link" [routerLink]="['products', productType.id]"
+       >{{productType.typeName}}</a>
+  </li>
+</ul>

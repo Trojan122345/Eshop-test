@@ -26,10 +26,10 @@ export class ProductsAddComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.loadingState.setWorking();
     this.productTypesService.list().subscribe(
       res => {
         this.productTypes = res;
-        this.loadingState.setWorking();
       },
       err => {
         this.loadingState.setError(err);
@@ -42,6 +42,10 @@ export class ProductsAddComponent implements OnInit {
       return false;
     }
     return true;
+  }
+
+  changeProductType(event: any) {
+    this.product.productTypeId = parseInt(event.target.value, 10);
   }
 
   insertNew(): void {

@@ -34,7 +34,7 @@ export class DiscountsAddComponent implements OnInit {
 
   ngOnInit() {
     this.loadingState.setWorking();
-    this.productsService.listSelling().subscribe(
+    this.productsService.listAll(true).subscribe(
       products => {
         this.products = products;
         this.loadingState.setSuccess();
