@@ -20,7 +20,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { DiscountsComponent } from './components/discounts/discounts/discounts.component';
 import { DiscountsAddComponent } from './components/discounts/discounts-add/discounts-add.component';
 import { DiscountsAlterComponent } from './components/discounts/discounts-alter/discounts-alter.component';
-import { SideNavComponent } from './components/side-nav/side-nav.component';
+import { SideNavComponent } from './components/side-nav/side-nav.component';import { ProductTypesAlterComponent } from './components/productTypes/product-types-alter/product-types-alter.component';
+import { ProductTypesAddComponent } from './components/productTypes/product-types-add/product-types-add.component';
 
 @NgModule({
   declarations: [
@@ -39,7 +40,9 @@ import { SideNavComponent } from './components/side-nav/side-nav.component';
     DiscountsComponent,
     DiscountsAddComponent,
     DiscountsAlterComponent,
-    SideNavComponent
+    SideNavComponent,
+    ProductTypesAlterComponent,
+    ProductTypesAddComponent
   ],
   imports: [
     BrowserModule,

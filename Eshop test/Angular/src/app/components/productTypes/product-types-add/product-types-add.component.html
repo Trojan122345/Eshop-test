@@ -1,0 +1,15 @@
+<div *ngIf="loadingState.isError()" class="alert alert-danger">Spojení se serverem selhalo</div>
+<div *ngIf="loadingState.isWorking()"><span class="spinner-border spinner-border-sm"></span></div>
+<div *ngIf="loadingState.isSuccess()">
+  <div *ngIf="workinsState.isError()" class="alert alert-danger">{{workinsState.getError()}}</div>
+  <div *ngIf="workinsState.isSuccess()" class="alert alert-success">Kategorie úspěšně přidána</div>
+  <h1 class="text-center text-primary"> Přidat kategorii</h1>
+
+  <form>
+    <div class="form-group">
+      <label for="name" classw="form-label">Název</label>
+      <input id="name" name="name" type="text" class="form-control" [(ngModel)]="productType.typeName" required/>
+    </div>
+    <button type="button" class="btn btn-primary form-control" (click)="insertNew()">Přidat</button>
+  </form>
+</div>

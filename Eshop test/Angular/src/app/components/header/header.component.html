@@ -13,6 +13,13 @@
     <li class="nav-item dropdown" *ngIf="loginService.isAdminMode()">
       <a href="#" class="nav-link cursor" routerLink="products/add">Přidat produkt</a>
     </li>
+    <li class="nav-item dropdown" *ngIf="loginService.isAdminMode()">
+      <a href="#" class="nav-link dropdown-toggle" id="navbardrop1" data-toggle="dropdown">Kategorie</a>
+      <div class="dropdown-menu">
+        <a class="dropdown-item cursor" routerLink="categories/add">Přidat</a>
+        <a class="dropdown-item cursor" routerLink="categories/alter">Upravit</a>
+      </div>
+    </li>
 
     <li class="nav-item" *ngIf="loginService.isUserLoggedIn()">
       <a class="nav-link cursor" routerLink="orders">Objednávky</a>

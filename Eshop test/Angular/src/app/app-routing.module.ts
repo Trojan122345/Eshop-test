@@ -13,6 +13,8 @@ import {InvalidTokenComponent} from './components/auth/invalid-token/invalid-tok
 import {DiscountsComponent} from './components/discounts/discounts/discounts.component';
 import {DiscountsAddComponent} from './components/discounts/discounts-add/discounts-add.component';
 import {ProductAlterComponent} from './components/products/product-alter/product-alter.component';
+import {ProductTypesAlterComponent} from './components/productTypes/product-types-alter/product-types-alter.component';
+import {ProductTypesAddComponent} from './components/productTypes/product-types-add/product-types-add.component';
 
 
 const routes: Routes = [
@@ -27,7 +29,9 @@ const routes: Routes = [
   {path: 'orders', component: OrdersComponent, canActivate: [AuthGuardUserService]},
   {path: 'loginExpired', component: InvalidTokenComponent},
   {path: 'discounts', component: DiscountsComponent, canActivate: [AuthGuardAdminService]},
-  {path: 'discounts/add', component: DiscountsAddComponent, canActivate: [AuthGuardAdminService]}
+  {path: 'discounts/add', component: DiscountsAddComponent, canActivate: [AuthGuardAdminService]},
+  {path: 'categories/alter', component: ProductTypesAlterComponent, canActivate: [AuthGuardAdminService]},
+  {path: 'categories/add', component: ProductTypesAddComponent, canActivate: [AuthGuardAdminService]}
 ];
 
 @NgModule({

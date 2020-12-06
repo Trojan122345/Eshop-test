@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {ProductsVM} from '../../../model/ProductsVM';
 import {OperState} from '../../../model/OperState';
 import {ProductsService} from '../Services/products.service';
-import {ActivatedRoute, Router} from '@angular/router';
+import {Router} from '@angular/router';
 import {ProductTypesService} from '../../productTypes/Services/product-types.service';
 import {ProductTypeVM} from '../../../model/ProductTypeVM';
 
@@ -20,7 +20,6 @@ export class ProductsAddComponent implements OnInit {
   constructor(
     private productsService: ProductsService,
     private productTypesService: ProductTypesService,
-    private activatedRoute: ActivatedRoute,
     private router: Router
   ) {
   }
@@ -74,7 +73,7 @@ export class ProductsAddComponent implements OnInit {
     this.finished = true;
     this.product = finishedProduct;
     setTimeout((router: Router) => {
-      router.navigate(['/products']);
+      router.navigate(['/products/1']);
     }, 2000, this.router);
   }
 }
