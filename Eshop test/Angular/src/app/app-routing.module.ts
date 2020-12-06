@@ -15,6 +15,7 @@ import {DiscountsAddComponent} from './components/discounts/discounts-add/discou
 import {ProductAlterComponent} from './components/products/product-alter/product-alter.component';
 import {ProductTypesAlterComponent} from './components/productTypes/product-types-alter/product-types-alter.component';
 import {ProductTypesAddComponent} from './components/productTypes/product-types-add/product-types-add.component';
+import {ProductTypesComponent} from './components/productTypes/product-types/product-types.component';
 
 
 const routes: Routes = [
@@ -31,7 +32,8 @@ const routes: Routes = [
   {path: 'discounts', component: DiscountsComponent, canActivate: [AuthGuardAdminService]},
   {path: 'discounts/add', component: DiscountsAddComponent, canActivate: [AuthGuardAdminService]},
   {path: 'categories/alter', component: ProductTypesAlterComponent, canActivate: [AuthGuardAdminService]},
-  {path: 'categories/add', component: ProductTypesAddComponent, canActivate: [AuthGuardAdminService]}
+  {path: 'categories/add', component: ProductTypesAddComponent, canActivate: [AuthGuardAdminService]},
+  {path: 'categories', component: ProductTypesComponent, canActivate: [AuthGuardAdminService]}
 ];
 
 @NgModule({

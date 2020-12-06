@@ -1,4 +1,4 @@
-<h1 class="text-secondara text-center">Seznam kategorií</h1>
+<h2 class="text-secondary text-center">Seznam kategorií</h2>
 <div *ngIf="loadingState.isError()">
   <div class="alert alert-danger">Spojení se serverem selhalo.</div>
 </div>
@@ -6,31 +6,29 @@
   <span class="spinner-border spinner-border-sm"></span>
 </div>
 <div *ngIf="loadingState.isSuccess()">
-  <div class="col-6">
-    <table class="table table-light table-hover">
-      <thead class="thead-dark">
-      <tr>
-        <th>ID</th>
-        <th>Název</th>
-        <th></th>
-      </tr>
-      </thead>
-      <tbody>
-      <tr *ngFor="let pt of productTypes; let index = index;trackBy:trackByIndex">
-        <td>{{pt.id}}</td>
+  <table class="table table-light table-hover">
+    <thead class="thead-dark">
+    <tr>
+      <th>ID</th>
+      <th>Název</th>
+      <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let pt of productTypes; let index = index;trackBy:trackByIndex">
+      <td>{{pt.id}}</td>
 
-        <td *ngIf="changingIndex!=index">{{pt.typeName}}</td>
-        <td *ngIf="changingIndex==index"><input type="text" [(ngModel)]="productTypes[index].typeName"></td>
+      <td *ngIf="changingIndex!=index">{{pt.typeName}}</td>
+      <td *ngIf="changingIndex==index"><input type="text" [(ngModel)]="productTypes[index].typeName"></td>
 
-        <td *ngIf="changingIndex!=index">
-          <button class="btn btn-primary" (click)="changingType(index)">Změnit název</button>
-        </td>
-        <td *ngIf="changingIndex==index">
-          <button *ngIf="workingOn!=index" class="btn btn-success" (click)="saveChanges(index)">Uložit změny</button>
-          <span *ngIf="workingOn==index">Loading...</span>
-        </td>
-      </tr>
-      </tbody>
-    </table>
-  </div>
+      <td *ngIf="changingIndex!=index">
+        <button class="btn btn-primary" (click)="changingType(index)">Změnit název</button>
+      </td>
+      <td *ngIf="changingIndex==index">
+        <button *ngIf="workingOn!=index" class="btn btn-success" (click)="saveChanges(index)">Uložit změny</button>
+        <span *ngIf="workingOn==index">Loading...</span>
+      </td>
+    </tr>
+    </tbody>
+  </table>
 </div>

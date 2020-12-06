@@ -22,6 +22,7 @@ import { DiscountsAddComponent } from './components/discounts/discounts-add/disc
 import { DiscountsAlterComponent } from './components/discounts/discounts-alter/discounts-alter.component';
 import { SideNavComponent } from './components/side-nav/side-nav.component';import { ProductTypesAlterComponent } from './components/productTypes/product-types-alter/product-types-alter.component';
 import { ProductTypesAddComponent } from './components/productTypes/product-types-add/product-types-add.component';
+import { ProductTypesComponent } from './components/productTypes/product-types/product-types.component';
 
 @NgModule({
   declarations: [
@@ -42,7 +43,8 @@ import { ProductTypesAddComponent } from './components/productTypes/product-type
     DiscountsAlterComponent,
     SideNavComponent,
     ProductTypesAlterComponent,
-    ProductTypesAddComponent
+    ProductTypesAddComponent,
+    ProductTypesComponent
   ],
   imports: [
     BrowserModule,
